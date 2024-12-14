@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct IconMakerApp: App {
+    
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CoordinatorView()
+                //.environment(\.navPath, navPath )
         }
     }
 }
