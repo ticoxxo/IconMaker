@@ -10,7 +10,6 @@ import SwiftUI
 struct Home: View {
     @Environment(\.coordinator) var navigation: Coordinator
     var body: some View {
-        //@Bindable var nav = navigation
         Button {
             navigation.push(page: .AddReminder)
         } label: {
@@ -20,6 +19,12 @@ struct Home: View {
 }
 
 #Preview {
-    Home()
-        .environment(\.coordinator, Coordinator())
+    @Previewable @State var coordinator = Coordinator()
+    NavigationStack(path: $coordinator.path) {
+        coordinator.build(page: .home)
+            .navigationDestination(for: AppPage.self) { page in
+                coordinator.build(page: page)
+            }
+    }
+    .environment(\.coordinator, coordinator)
 }

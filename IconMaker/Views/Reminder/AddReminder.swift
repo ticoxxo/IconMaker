@@ -27,6 +27,7 @@ struct AddReminder: View {
                      }
                  }
              */
+            ReminderIcons.hiking
             PhotosPicker(selection: $viewModel.imageSelection,
                          matching: .images,
                          photoLibrary: .shared()) {
@@ -54,6 +55,12 @@ struct AddReminder: View {
 }
 
 #Preview {
-    AddReminder()
-        .environment(\.coordinator, Coordinator())
+    @Previewable @State var coordinator = Coordinator()
+    NavigationStack(path: $coordinator.path) {
+        coordinator.build(page: .AddReminder)
+            .navigationDestination(for: AppPage.self) { page in
+                coordinator.build(page: page)
+            }
+    }
+    .environment(\.coordinator, coordinator)
 }
